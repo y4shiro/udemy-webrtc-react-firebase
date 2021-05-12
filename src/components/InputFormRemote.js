@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignIn() {
+const InputFormRemote = ({ remotePeerName, setRemotePeerName }) => {
   const label = '相手の名前';
   const classes = useStyles();
 
@@ -78,4 +78,6 @@ export default function SignIn() {
       </Box>
     </Container>
   );
-}
+};
+
+export default InputFormRemote;
