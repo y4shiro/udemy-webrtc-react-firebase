@@ -17,6 +17,7 @@ const getMedia = async () => {
 const App = () => {
   const [localPeerName, setLocalPeerName] = useState('');
   const [remotePeerName, setRemotePeerName] = useState('');
+
   return (
     <>
       <InputFormLocal
@@ -24,6 +25,7 @@ const App = () => {
         setLocalPeerName={setLocalPeerName}
       />
       <InputFormRemote
+        localPeerName={localPeerName}
         remotePeerName={remotePeerName}
         setRemotePeerName={setRemotePeerName}
       />
