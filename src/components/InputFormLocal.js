@@ -55,6 +55,7 @@ const InputFormLocal = ({ rtcClient }) => {
 
   const initializeLocalPeer = useCallback(
     (e) => {
+      rtcClient.startLitening(name);
       rtcClient.localPeerName = name;
       rtcClient.setRtcClient();
       e.preventDefault();
