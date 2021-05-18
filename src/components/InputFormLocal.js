@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
@@ -12,7 +12,7 @@ function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
-      <Link color="inherit" href="https://y4shiro.net/">
+      <Link color="inherit" href="https://y4shiro.net">
         y4shiro
       </Link>{' '}
       {new Date().getFullYear()}
@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const InputFormLocal = ({ rtcClient }) => {
+export default function SignIn({ rtcClient }) {
   const label = 'あなたの名前';
   const classes = useStyles();
   const [disabled, setDisabled] = useState(true);
@@ -55,9 +55,7 @@ const InputFormLocal = ({ rtcClient }) => {
 
   const initializeLocalPeer = useCallback(
     (e) => {
-      rtcClient.startLitening(name);
-      rtcClient.localPeerName = name;
-      rtcClient.setRtcClient();
+      rtcClient.startListening(name);
       e.preventDefault();
     },
     [name, rtcClient]
@@ -74,31 +72,31 @@ const InputFormLocal = ({ rtcClient }) => {
         </Typography>
         <form className={classes.form} noValidate>
           <TextField
-            variant="outlined"
-            margin="normal"
-            required
+            autoFocus
             fullWidth
             label={label}
+            margin="normal"
             name="name"
-            autoFocus
-            value={name}
             onChange={(e) => setName(e.target.value)}
-            onCompositionStart={() => setIsComposed(true)}
             onCompositionEnd={() => setIsComposed(false)}
+            onCompositionStart={() => setIsComposed(true)}
             onKeyDown={(e) => {
               if (isComposed) return;
               if (e.target.value === '') return;
               if (e.key === 'Enter') initializeLocalPeer(e);
             }}
+            required
+            value={name}
+            variant="outlined"
           />
           <Button
-            disabled={disabled}
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
             className={classes.submit}
+            color="primary"
+            disabled={disabled}
+            fullWidth
             onClick={(e) => initializeLocalPeer(e)}
+            type="submit"
+            variant="contained"
           >
             決定
           </Button>
@@ -109,6 +107,4 @@ const InputFormLocal = ({ rtcClient }) => {
       </Box>
     </Container>
   );
-};
-
-export default InputFormLocal;
+}
