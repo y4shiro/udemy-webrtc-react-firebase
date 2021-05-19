@@ -54,8 +54,8 @@ const InputFormRemote = ({ rtcClient }) => {
   }, [name]);
 
   const initializeRemotePeer = useCallback(
-    (e) => {
-      rtcClient.connect(name);
+    async (e) => {
+      await rtcClient.connect(name);
       e.preventDefault();
     },
     [name, rtcClient]
@@ -84,10 +84,10 @@ const InputFormRemote = ({ rtcClient }) => {
             onChange={(e) => setName(e.target.value)}
             onCompositionStart={() => setIsComposed(true)}
             onCompositionEnd={() => setIsComposed(false)}
-            onKeyDown={(e) => {
+            onKeyDown={async (e) => {
               if (isComposed) return;
               if (e.target.value === '') return;
-              if (e.key === 'Enter') initializeRemotePeer(e);
+              if (e.key === 'Enter') await initializeRemotePeer(e);
             }}
           />
           <Button
